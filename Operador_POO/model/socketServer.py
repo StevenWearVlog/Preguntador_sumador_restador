@@ -1,7 +1,7 @@
 import socket
 
-class SocketModel:
-    def __init__(self, host="0.0.0.0", port=8282):
+class SocketServer:
+    def __init__(self, host="0.0.0.0", port=8585):
         self.host = host
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

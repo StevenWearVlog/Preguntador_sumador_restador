@@ -1,10 +1,10 @@
-from model.socketClient import SocketModel
-from view.Terminal import TerminalView
+from model.socketServer import SocketServer
+from view.Terminal import Terminal
 
 class Controller:
     def __init__(self):
-        self.model = SocketModel()
-        self.view = TerminalView()
+        self.model = SocketServer()
+        self.view = Terminal()
 
     def run(self):
         conn, addr = self.model.start_server()
