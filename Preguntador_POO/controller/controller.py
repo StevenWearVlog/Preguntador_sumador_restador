@@ -7,13 +7,12 @@ class Controller:
         self.view = Terminal()
 
     def run(self):
-        a = int(input("Ingrese a: "))
-        b = int(input("Ingrese b: "))
+        while True:
+            a = int(input("Ingrese a (0 para salir): "))
+            if a == 0:
+                print("Saliendo del cliente...")
+                break
 
-        self.model.connect()
-        self.model.send_data(f"{a},{b}")
-
-        result = self.model.receive_data()
-        self.view.show_result(a, b, result)
-
-        self.model.close()
+            b = int(input("Ingrese b: "))
+            result = self.model.send_request(f"{a},{b}")
+            self.view.show_result(result)

@@ -1,4 +1,4 @@
-class TerminalView:
+class Terminal:
     @staticmethod
     def show_message(message: str):
         print(message)

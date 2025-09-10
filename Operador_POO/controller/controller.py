@@ -1,4 +1,4 @@
-from model.socketServer import SocketServer
+from model.SocketServer import SocketServer
 from view.Terminal import Terminal
 
 class Controller:
@@ -7,15 +7,21 @@ class Controller:
         self.view = Terminal()
 
     def run(self):
-        conn, addr = self.model.start_server()
-        self.view.show_message(f"Conexión establecida desde {addr}")
+        print("Servidor iniciado, esperando clientes...\n")
+        while True:  # 🔁 solo aceptamos clientes, sin rebind
+            conn, addr = self.model.accept_client()
+            self.view.show_message(f"Conexión establecida desde {addr}")
 
-        data = conn.recv(1024).decode()
-        a, b = map(int, data.split(","))
-        result = a + b
+            try:
+                data = conn.recv(1024).decode()
+                if not data:
+                    continue
 
-        conn.sendall(str(result).encode())
-        conn.close()
+                a, b = map(int, data.split(","))
+                result = a + b
 
-        self.view.show_result(a, b, result)
-        self.model.close()
+                conn.sendall(str(result).encode())
+                self.view.show_result(a, b, result)
+
+            finally:
+                conn.close()
